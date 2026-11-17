@@ -36,3 +36,8 @@ teste('RN01 — placa Mercosul em minúsculas é aceita (abc1d23)', () => {
 teste('RN08 — pernoite 22:00 → 07:00 dura 540 min (9h00)', () => {
   return igual(calcularPermanencia('22:00', '07:00'), 540);
 });
+
+teste('RN08 — pernoite 22:00 → 07:00 de carro paga R$ 32,00', () => {
+  const minutos = calcularPermanencia('22:00', '07:00');
+  return igual(calcularValor('ABC1D23', minutos, 'carro', false), 32);
+});
