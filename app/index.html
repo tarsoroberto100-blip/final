@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EstacionaAí — Saída de veículos</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>🅿️ EstacionaAí</h1>
+  <p>Estacionamento Centro · Caixa da saída</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Registrar saída</h2>
+    <form id="form-saida" novalidate>
+      <label>Placa
+        <input id="placa" type="text" placeholder="ABC1D23 ou ABC-1234">
+      </label>
+      <label>Tipo de veículo
+        <select id="tipo">
+          <option value="carro">Carro</option>
+          <option value="moto">Moto</option>
+        </select>
+      </label>
+      <div class="linha">
+        <label>Entrada (HH:MM)
+          <input id="entrada" type="text" placeholder="08:30">
+        </label>
+        <label>Saída (HH:MM)
+          <input id="saida" type="text" placeholder="10:15">
+        </label>
+      </div>
+      <label class="check"><input id="mensalista" type="checkbox"> Mensalista</label>
+      <div class="botoes">
+        <button type="button" id="btn-calcular" class="secundario">Calcular valor</button>
+        <button type="submit">Registrar saída</button>
+      </div>
+      <p id="valor" class="valor"></p>
+      <p id="mensagem" class="mensagem" role="alert"></p>
+    </form>
+  </section>
+  <section class="card">
+    <h2>Movimento do dia</h2>
+    <table>
+      <thead><tr><th>Placa</th><th>Tipo</th><th>Entrada</th><th>Saída</th><th>Permanência</th><th>Valor</th></tr></thead>
+      <tbody id="lista"></tbody>
+    </table>
+    <p id="vazio" class="vazio">Nenhuma saída registrada.</p>
+    <p class="total">Total do dia: <span id="total">R$ 0,00</span></p>
+  </section>
+</main>
+<footer>EstacionaAí v1.0 · Projeto da turma</footer>
+<script src="js/regras.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

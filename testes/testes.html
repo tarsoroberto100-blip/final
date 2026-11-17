@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EstacionaAí — Testes automatizados</title>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; background: #F7F3EE; color: #1C2421; margin: 0; padding: 24px; }
+  h1 { margin: 0 0 4px; color: #7A3508; }
+  .resumo { font-size: 20px; font-weight: 700; margin: 12px 0 20px; }
+  .ok { color: #1F7A4D; font-weight: 700; } .falha { color: #B3261E; font-weight: 700; }
+  table { width: 100%; max-width: 1000px; border-collapse: collapse; background: #fff; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #EEE3D9; font-size: 14px; vertical-align: top; }
+  th { background: #F3E1D2; }
+  code { font-family: Consolas, monospace; }
+</style>
+</head>
+<body>
+<h1>EstacionaAí — testes automatizados</h1>
+<p>Os testes ficam em <code>testes/meus-testes.js</code>. Escreva, salve e recarregue esta página (F5).</p>
+<p id="resumo" class="resumo"></p>
+<table>
+  <thead><tr><th>#</th><th>Teste</th><th>Esperado</th><th>Obtido</th><th>Resultado</th></tr></thead>
+  <tbody id="resultados"></tbody>
+</table>
+<script>
+// Mini executor de testes: teste(nome, funcao) e igual(obtido, esperado)
+const _testes = [];
+function teste(nome, funcao) { _testes.push({ nome, funcao }); }
+function igual(obtido, esperado) {
+  if (obtido !== esperado) {
+    const erro = new Error('diferente');
+    erro.obtido = obtido; erro.esperado = esperado;
+    throw erro;
+  }
+  return { obtido, esperado };
+}
+</script>
+<script src="../app/js/regras.js"></script>
+<script src="meus-testes.js"></script>
+<script>
+let passou = 0;
+const corpo = document.getElementById('resultados');
+_testes.forEach((t, i) => {
+  let ok = true, esperado = '', obtido = '';
+  try {
+    const r = t.funcao();
+    if (r) { esperado = r.esperado; obtido = r.obtido; }
+  } catch (e) {
+    ok = false;
+    esperado = 'esperado' in e ? e.esperado : '—';
+    obtido = 'obtido' in e ? e.obtido : 'erro: ' + e.message;
+  }
+  if (ok) passou++;
+  const tr = document.createElement('tr');
+  [String(i + 1), t.nome, String(esperado), String(obtido)].forEach(x => {
+    const td = document.createElement('td'); td.textContent = x; tr.appendChild(td);
+  });
+  const td = document.createElement('td');
+  td.textContent = ok ? 'Passou' : 'Falhou';
+  td.className = ok ? 'ok' : 'falha';
+  tr.appendChild(td);
+  corpo.appendChild(tr);
+});
+const resumo = document.getElementById('resumo');
+resumo.textContent = passou + ' de ' + _testes.length + ' testes passaram';
+resumo.className = 'resumo ' + (passou === _testes.length ? 'ok' : 'falha');
+</script>
+</body>
+</html>
