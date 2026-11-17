@@ -41,3 +41,7 @@ teste('RN08 — pernoite 22:00 → 07:00 de carro paga R$ 32,00', () => {
   const minutos = calcularPermanencia('22:00', '07:00');
   return igual(calcularValor('ABC1D23', minutos, 'carro', false), 32);
 });
+
+teste('RN04 — 1h01 de carro paga R$ 11,00 (hora adicional iniciada)', () => {
+  return igual(calcularValor('ABC1D23', 61, 'carro', false), 11);
+});
