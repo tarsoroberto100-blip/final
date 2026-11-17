@@ -45,3 +45,7 @@ teste('RN08 — pernoite 22:00 → 07:00 de carro paga R$ 32,00', () => {
 teste('RN04 — 1h01 de carro paga R$ 11,00 (hora adicional iniciada)', () => {
   return igual(calcularValor('ABC1D23', 61, 'carro', false), 11);
 });
+
+teste('RN04 — 2h30 de carro paga R$ 14,00', () => {
+  return igual(calcularValor('ABC1D23', 150, 'carro', false), 14);
+});
