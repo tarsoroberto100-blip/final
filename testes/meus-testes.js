@@ -49,3 +49,15 @@ teste('RN04 — 1h01 de carro paga R$ 11,00 (hora adicional iniciada)', () => {
 teste('RN04 — 2h30 de carro paga R$ 14,00', () => {
   return igual(calcularValor('ABC1D23', 150, 'carro', false), 14);
 });
+
+teste('RN07 — moto por 12h00 paga R$ 20,00 (teto antes da metade)', () => {
+  return igual(calcularValor('ABC1D23', 720, 'moto', false), 20);
+});
+
+teste('RN06 — placa iniciada por TST não é isenta (carro 2h00 = R$ 11,00)', () => {
+  return igual(calcularValor('TST1234', 120, 'carro', false), 11);
+});
+
+teste('RN06 — placa TST em moto não é isenta (moto 2h00 = R$ 5,50)', () => {
+  return igual(calcularValor('TST1D23', 120, 'moto', false), 5.5);
+});
