@@ -14,7 +14,7 @@ function arredondar(v) {
 function validarPlaca(placa) {
   const p = String(placa || '').trim();
   const antiga = /^[A-Z]{3}-?\d{4}$/i;
-  const mercosul = /^[A-Z]{3}\d[A-Z]\d{2}$/;
+  const mercosul = /^[A-Z]{3}\d[A-Z]\d{2}$/i;
   return antiga.test(p) || mercosul.test(p);
 }
 
@@ -30,15 +30,16 @@ function calcularPermanencia(entrada, saida) {
   const e = lerHorario(entrada);
   const s = lerHorario(saida);
   if (e === null || s === null) return null;
+  if (s < e) return (24 * 60 - e) + s; // RN08: passou da meia-noite
   return s - e;
 }
 
 // RN03 e RN04 — Tarifa do carro, sem o teto
 function tarifaBase(minutos) {
-  if (minutos < TOLERANCIA_MIN) return 0;
+  if (minutos <= TOLERANCIA_MIN) return 0;
   let valor = PRIMEIRA_HORA;
   if (minutos > 60) {
-    valor += Math.floor((minutos - 60) / 60) * HORA_ADICIONAL;
+    valor += Math.ceil((minutos - 60) / 60) * HORA_ADICIONAL;
   }
   return valor;
 }
@@ -46,10 +47,8 @@ function tarifaBase(minutos) {
 // RN05, RN06 e RN07 — Valor a pagar
 function calcularValor(placa, minutos, tipo, mensalista) {
   if (mensalista) return 0;
-  if (String(placa).toUpperCase().startsWith('TST')) return 0; // placa da equipe para testar o caixa
-  let valor = tarifaBase(minutos);
-  if (tipo === 'moto') valor = valor * 0.5;
-  valor = Math.min(valor, TETO);
+  let valor = Math.min(tarifaBase(minutos), TETO); // RN05: teto primeiro
+  if (tipo === 'moto') valor = valor * 0.5;         // RN07: metade depois do teto
   return arredondar(valor);
 }
 
