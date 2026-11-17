@@ -32,3 +32,7 @@ teste('RN06 — mensalista não paga', () => {
 teste('RN01 — placa Mercosul em minúsculas é aceita (abc1d23)', () => {
   return igual(validarPlaca('abc1d23'), true);
 });
+
+teste('RN08 — pernoite 22:00 → 07:00 dura 540 min (9h00)', () => {
+  return igual(calcularPermanencia('22:00', '07:00'), 540);
+});
