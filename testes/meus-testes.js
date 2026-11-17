@@ -29,3 +29,6 @@ teste('RN06 — mensalista não paga', () => {
 
 // ===== Testes do grupo (um por defeito corrigido, e outros de regressão) =====
 
+teste('RN01 — placa Mercosul em minúsculas é aceita (abc1d23)', () => {
+  return igual(validarPlaca('abc1d23'), true);
+});
